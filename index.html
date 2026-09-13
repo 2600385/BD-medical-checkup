@@ -186,12 +186,13 @@
   .core-point p{font-size:.83rem;color:var(--ink-soft);}
 
   /* ---------- poster (actual brochure image + hospital badge) ---------- */
-  .poster-frame{position:relative;margin-top:34px;}
+  .poster-frame{position:relative;margin-top:50px;}
   .poster-img{display:block;width:100%;border-radius:16px;box-shadow:var(--shadow);}
   .poster-badge{
-    position:absolute;top:-15px;left:26px;z-index:5;background:var(--t-accent);color:#fff;
+    position:absolute;top:-42px;left:0;z-index:5;background:var(--t-accent);color:#fff;
     font-weight:700;font-size:.85rem;padding:7px 18px;border-radius:999px;
     box-shadow:0 6px 14px -4px rgba(0,0,0,.4);font-family:var(--font-mono);letter-spacing:.01em;
+    max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   }
 
   /* ---------- checkpoint (shared across posters) ---------- */
