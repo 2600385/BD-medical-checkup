@@ -1,4 +1,4 @@
-<title>검진센터 제안 BD</title>
+<title>검진센터 웰체크&일만사 제안</title>
 <style>
   :root{
     --ink:#142023;
@@ -18,10 +18,12 @@
     --danger:#b3432f;
     --danger-ink:#4a1b10;
     --danger-soft:#f6ded8;
+    --band-bg:#e7f0fb;
+    --band-line:#cfe0f3;
     --shadow:0 1px 2px rgba(20,32,35,.06),0 8px 24px -12px rgba(20,32,35,.18);
-    --font-display:'Noto Serif KR','Noto Serif',serif;
-    --font-body:'IBM Plex Sans KR','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
-    --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',monospace;
+    --font-display:'Gothic A1','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-body:'Gothic A1','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'Gothic A1','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -42,6 +44,8 @@
       --danger:#ff9c85;
       --danger-ink:#fde9e3;
       --danger-soft:#3a1f18;
+      --band-bg:#132a3d;
+      --band-line:#1e3d54;
       --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
     }
   }
@@ -63,6 +67,8 @@
     --danger:#ff9c85;
     --danger-ink:#fde9e3;
     --danger-soft:#3a1f18;
+    --band-bg:#132a3d;
+    --band-line:#1e3d54;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
   }
 
@@ -93,15 +99,17 @@
   /* ---------- header ---------- */
   .topbar{
     position:sticky;top:0;z-index:20;
-    display:flex;flex-wrap:wrap;gap:14px 24px;
-    align-items:center;justify-content:space-between;
-    padding-block:16px;
-    background:var(--paper);
-    border-bottom:1px solid var(--line);
+    display:flex;flex-direction:column;gap:14px;
+    padding:20px 16px 16px;
+    margin-inline:-16px;
+    background:var(--band-bg);
+    border-bottom:1px solid var(--band-line);
   }
-  .brand{display:flex;align-items:baseline;gap:8px;}
-  .brand-mark{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--accent);}
-  .brand-name{font-family:var(--font-display);font-weight:600;font-size:1.05rem;}
+  .topbar > *{max-width:1040px;margin-inline:auto;width:100%;padding-inline:16px;}
+  .brand{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;}
+  .brand-mark{font-family:var(--font-display);font-weight:800;font-size:clamp(1.15rem,4vw,1.6rem);color:var(--accent);flex:none;}
+  .brand-name{font-family:var(--font-display);font-weight:800;font-size:clamp(1.15rem,4vw,1.6rem);letter-spacing:-.01em;text-wrap:balance;}
+  .topbar-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:flex-end;}
   .hosp-field{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
   .hosp-field label{font-size:.7rem;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;}
   .hosp-row{display:flex;gap:8px;align-items:center;}
@@ -127,12 +135,21 @@
   .print-panel{
     position:absolute;top:calc(100% + 8px);right:0;z-index:30;
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
-    padding:14px;box-shadow:var(--shadow);width:240px;display:flex;flex-direction:column;gap:9px;
+    padding:16px;box-shadow:var(--shadow);width:270px;display:flex;flex-direction:column;gap:12px;
   }
   .print-panel[hidden]{display:none;}
-  .print-panel-title{font-size:.78rem;font-weight:600;color:var(--ink-soft);}
-  .print-panel label{display:flex;align-items:center;gap:8px;font-size:.86rem;}
-  .print-go{margin-top:4px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:8px;padding:9px;font-weight:600;font-size:.85rem;cursor:pointer;}
+  .print-panel-title{font-size:.78rem;font-weight:700;color:var(--ink-soft);margin-bottom:2px;}
+  .print-check-row{
+    display:grid;grid-template-columns:18px 1fr;align-items:start;column-gap:9px;
+    font-size:.86rem;line-height:1.4;text-align:left;cursor:pointer;
+  }
+  .print-check-row input{margin:2px 0 0;flex:none;width:16px;height:16px;}
+  .print-check-row span{padding-top:0;}
+  .print-check-row.select-all{
+    padding-bottom:8px;margin-bottom:2px;border-bottom:1px solid var(--line);
+    font-weight:600;color:var(--ink-soft);
+  }
+  .print-go{margin-top:4px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:8px;padding:9px;font-weight:700;font-size:.85rem;cursor:pointer;}
   .print-go:hover{opacity:.92;}
 
   /* ---------- tabs ---------- */
@@ -149,7 +166,7 @@
     font-size:.9rem;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;
   }
   .tab:hover{background:var(--surface-2);}
-  .tab.active{background:var(--accent);color:var(--accent-ink);}
+  .tab.active{background:var(--current-accent,var(--accent));color:#fff;}
 
   main{padding-block:8px 40px;}
   .view[hidden]{display:none;}
@@ -231,38 +248,45 @@
   .foot-note{text-align:center;color:var(--ink-faint);font-size:.78rem;padding-block:24px 8px;}
 
   @media print{
-    .topbar,.tabs,.no-print{display:none !important;}
+    @page{size:A4 portrait;margin:0;}
+    .topbar,.tabs,.no-print,.checkpoint{display:none !important;}
     .view[hidden]{display:none !important;}
     body{padding-inline:0;background:#fff;}
     .view{break-after:page;}
-    .poster-img,.type-card,.core-band{box-shadow:none;}
+    .container{max-width:none;}
+    .poster-frame{margin-top:0;}
+    .poster-badge{top:10px;box-shadow:none;}
+    .poster-img{width:100%;height:100vh;object-fit:contain;border-radius:0;box-shadow:none;display:block;}
   }
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800;900&display=swap">
 
 <div class="app">
 
   <header class="topbar">
     <div class="brand">
       <span class="brand-mark">⚕</span>
-      <span class="brand-name">검진센터 제안 BD</span>
+      <span class="brand-name">검진센터 웰체크&amp;일만사 제안</span>
     </div>
-    <div class="hosp-field">
-      <label for="hospInput">제안 대상 병원명</label>
-      <div class="hosp-row">
-        <input id="hospInput" type="text" value="행복의원" maxlength="24" autocomplete="off">
-        <div class="print-wrap no-print">
-          <button id="printToggle" class="print-btn-sm" type="button">출력</button>
-          <div class="print-panel" id="printPanel" hidden>
-            <p class="print-panel-title">출력할 유형 선택</p>
-            <label><input type="checkbox" class="print-check" value="type1"> 유형 01 · 검진 결과 연동형</label>
-            <label><input type="checkbox" class="print-check" value="type2"> 유형 02 · 혜택형</label>
-            <label><input type="checkbox" class="print-check" value="type3"> 유형 03 · 혜택+비대면관리형</label>
-            <button id="printGo" class="print-go" type="button">출력하기</button>
+    <div class="topbar-controls">
+      <div class="hosp-field">
+        <label for="hospInput">제안 대상 병원명</label>
+        <div class="hosp-row">
+          <input id="hospInput" type="text" value="행복의원" maxlength="24" autocomplete="off">
+          <div class="print-wrap no-print">
+            <button id="printToggle" class="print-btn-sm" type="button">출력</button>
+            <div class="print-panel" id="printPanel" hidden>
+              <p class="print-panel-title">출력할 유형 선택</p>
+              <label class="print-check-row select-all"><input type="checkbox" id="printCheckAll"> <span>전체 선택</span></label>
+              <label class="print-check-row"><input type="checkbox" class="print-check" value="type1"> <span>유형 01 · 검진 결과 연동형</span></label>
+              <label class="print-check-row"><input type="checkbox" class="print-check" value="type2"> <span>유형 02 · 혜택형</span></label>
+              <label class="print-check-row"><input type="checkbox" class="print-check" value="type3"> <span>유형 03 · 혜택+비대면관리형</span></label>
+              <button id="printGo" class="print-go" type="button">출력하기</button>
+            </div>
           </div>
         </div>
+        <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
       </div>
-      <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
     </div>
   </header>
 
@@ -303,7 +327,7 @@
               <span class="goto">브로셔 열기 →</span>
             </span>
           </button>
-          <button class="type-card" data-goto="type3" style="--tc-color:#128a6c;" type="button">
+          <button class="type-card" data-goto="type3" style="--tc-color:#3fae95;" type="button">
             <span class="thumb"><img src="assets/posters/type3-benefit-remote.png" alt=""></span>
             <span class="body">
               <span class="code">TYPE 03</span>
@@ -351,7 +375,7 @@
 
     <!-- ================= TYPE 3 : 혜택+비대면관리형 ================= -->
     <section id="view-type3" class="view" hidden>
-      <div class="container" style="--t-accent:#128a6c;">
+      <div class="container" style="--t-accent:#3fae95;">
         <div class="poster-frame">
           <span class="poster-badge"><span class="hosp-name">행복의원</span> 혜택+비대면형</span>
           <img class="poster-img" src="assets/posters/type3-benefit-remote.png" alt="혜택+비대면관리형 브로셔">
@@ -412,13 +436,15 @@
   const printPanel = document.getElementById('printPanel');
   const printGo = document.getElementById('printGo');
   const printChecks = Array.from(document.querySelectorAll('.print-check'));
+  const printCheckAll = document.getElementById('printCheckAll');
   const views = {
     home: document.getElementById('view-home'),
     type1: document.getElementById('view-type1'),
     type2: document.getElementById('view-type2'),
     type3: document.getElementById('view-type3')
   };
-  let currentView = 'type1';
+  const typeAccent = { home:null, type1:'#2f5fd6', type2:'#d9622f', type3:'#3fae95' };
+  let currentView = 'home';
 
   function fillCheckpoints(){
     const tpl = document.getElementById('checkpointTpl');
@@ -444,11 +470,19 @@
     currentView = name;
     Object.keys(views).forEach(function(key){ views[key].hidden = (key !== name); });
     tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.view === name); });
+    const accent = typeAccent[name];
+    if(accent){ document.documentElement.style.setProperty('--current-accent', accent); }
+    else { document.documentElement.style.removeProperty('--current-accent'); }
     window.scrollTo(0,0);
   }
 
   function syncPrintChecks(){
     printChecks.forEach(function(c){ c.checked = (c.value === currentView); });
+    syncPrintCheckAll();
+  }
+
+  function syncPrintCheckAll(){
+    printCheckAll.checked = printChecks.every(function(c){ return c.checked; });
   }
 
   function printSelected(keys){
@@ -482,6 +516,12 @@
       printPanel.hidden = !willOpen;
       if(willOpen) syncPrintChecks();
     });
+    printCheckAll.addEventListener('change', function(){
+      printChecks.forEach(function(c){ c.checked = printCheckAll.checked; });
+    });
+    printChecks.forEach(function(c){
+      c.addEventListener('change', syncPrintCheckAll);
+    });
     document.addEventListener('click', function(e){
       if(!printPanel.hidden && !printPanel.contains(e.target) && e.target !== printToggle){
         printPanel.hidden = true;
@@ -501,7 +541,7 @@
     const initialHosp = (data && data.hospName) || loadPersistedHosp() || hospInput.value;
     hospInput.value = initialHosp;
     applyHospName(initialHosp);
-    showView((data && data.view) || 'type1');
+    showView((data && data.view) || 'home');
   }
 
   if(window.claude && window.claude.hot && window.claude.hot.snapshot){
