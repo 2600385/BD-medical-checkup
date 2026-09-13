@@ -1,78 +1,40 @@
-<title>검진센터 제안 BD</title>
+<title>검진센터 웰체크&일만사 제안</title>
 <style>
   :root{
-    --ink:#142023;
-    --ink-soft:#45585c;
-    --ink-faint:#7c8e8f;
-    --paper:#f3f6f5;
+    --ink:#101826;
+    --ink-soft:#4a5b73;
+    --ink-faint:#8195ac;
+    --paper:#eef4fb;
     --surface:#ffffff;
-    --surface-2:#e9f0ee;
-    --line:#d7e0dd;
-    --line-strong:#b9c8c4;
-    --accent:#0f6e5c;
+    --surface-2:#e4eefb;
+    --line:#d7e3f0;
+    --line-strong:#b8cbe0;
+    --accent:#2f6fe0;
     --accent-ink:#ffffff;
-    --accent-soft:#dcece6;
+    --accent-soft:#e1ecfc;
     --gold:#a97b1f;
     --gold-ink:#3a2c0c;
     --gold-soft:#f4e6c9;
     --danger:#b3432f;
     --danger-ink:#4a1b10;
     --danger-soft:#f6ded8;
-    --shadow:0 1px 2px rgba(20,32,35,.06),0 8px 24px -12px rgba(20,32,35,.18);
-    --font-display:'Noto Serif KR','Noto Serif',serif;
-    --font-body:'IBM Plex Sans KR','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
-    --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',monospace;
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --ink:#eaf2ef;
-      --ink-soft:#a9c0bb;
-      --ink-faint:#72908a;
-      --paper:#0e1615;
-      --surface:#16211f;
-      --surface-2:#1b2926;
-      --line:#2a3735;
-      --line-strong:#3a4a47;
-      --accent:#52d8b0;
-      --accent-ink:#06231b;
-      --accent-soft:#173a30;
-      --gold:#e0b354;
-      --gold-ink:#2c2005;
-      --gold-soft:#332912;
-      --danger:#ff9c85;
-      --danger-ink:#fde9e3;
-      --danger-soft:#3a1f18;
-      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
-    }
-  }
-  :root[data-theme="dark"]{
-    --ink:#eaf2ef;
-    --ink-soft:#a9c0bb;
-    --ink-faint:#72908a;
-    --paper:#0e1615;
-    --surface:#16211f;
-    --surface-2:#1b2926;
-    --line:#2a3735;
-    --line-strong:#3a4a47;
-    --accent:#52d8b0;
-    --accent-ink:#06231b;
-    --accent-soft:#173a30;
-    --gold:#e0b354;
-    --gold-ink:#2c2005;
-    --gold-soft:#332912;
-    --danger:#ff9c85;
-    --danger-ink:#fde9e3;
-    --danger-soft:#3a1f18;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+    --band-bg:#dceafc;
+    --band-line:#bcd8f0;
+    --shadow:0 1px 2px rgba(16,24,38,.06),0 8px 24px -12px rgba(16,24,38,.18);
+    --font-display:'Noto Sans KR','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-body:'Noto Sans KR','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'Noto Sans KR','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
   }
 
   *{box-sizing:border-box;}
   body{
+    margin:0;
     background:var(--paper);
     color:var(--ink);
     font-family:var(--font-body);
     line-height:1.7;
     padding-inline:16px;
+    word-break:keep-all;
   }
   h1,h2,h3,h4{
     font-family:var(--font-display);
@@ -91,17 +53,26 @@
   .app{max-width:1040px;margin-inline:auto;}
 
   /* ---------- header ---------- */
+  .sticky-head{position:sticky;top:0;z-index:20;background:var(--paper);}
   .topbar{
-    position:sticky;top:0;z-index:20;
-    display:flex;flex-wrap:wrap;gap:14px 24px;
-    align-items:center;justify-content:space-between;
-    padding-block:16px;
-    background:var(--paper);
-    border-bottom:1px solid var(--line);
+    display:flex;flex-direction:column;gap:14px;
+    padding:26px 16px 22px;
+    margin-inline:-16px;
+    background:var(--band-bg);
+    box-shadow:0 12px 28px -20px rgba(20,32,35,.45);
   }
-  .brand{display:flex;align-items:baseline;gap:8px;}
-  .brand-mark{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--accent);}
-  .brand-name{font-family:var(--font-display);font-weight:600;font-size:1.05rem;}
+  .topbar > *{max-width:1040px;margin-inline:auto;width:100%;padding-inline:16px;}
+  .brand-block{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
+  .brand-preline{font-size:.88rem;font-weight:600;color:var(--ink-soft);}
+  .brand{display:flex;align-items:center;justify-content:center;}
+  .brand-title{display:inline-flex;align-items:center;gap:10px;}
+  .brand-mark{font-family:var(--font-display);font-weight:900;font-size:clamp(1.3rem,4.4vw,1.85rem);color:var(--accent);flex:none;}
+  .brand-name{font-family:var(--font-display);font-weight:900;font-size:clamp(1.3rem,4.4vw,1.85rem);letter-spacing:-.02em;text-wrap:balance;}
+  .thread-deco{display:block;width:min(220px,60%);height:32px;margin-block:4px 2px;}
+  .thread-deco path{fill:none;stroke:#b6976a;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+  .brand-subline{font-size:.85rem;color:var(--ink-faint);max-width:52ch;}
+  .brand-subline strong{color:var(--accent);font-weight:700;}
+  .topbar-controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:flex-end;}
   .hosp-field{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
   .hosp-field label{font-size:.7rem;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;}
   .hosp-row{display:flex;gap:8px;align-items:center;}
@@ -127,17 +98,25 @@
   .print-panel{
     position:absolute;top:calc(100% + 8px);right:0;z-index:30;
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
-    padding:14px;box-shadow:var(--shadow);width:240px;display:flex;flex-direction:column;gap:9px;
+    padding:16px;box-shadow:var(--shadow);width:270px;display:flex;flex-direction:column;gap:12px;
   }
   .print-panel[hidden]{display:none;}
-  .print-panel-title{font-size:.78rem;font-weight:600;color:var(--ink-soft);}
-  .print-panel label{display:flex;align-items:center;gap:8px;font-size:.86rem;}
-  .print-go{margin-top:4px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:8px;padding:9px;font-weight:600;font-size:.85rem;cursor:pointer;}
+  .print-panel-title{font-size:.78rem;font-weight:700;color:var(--ink-soft);margin-bottom:2px;}
+  .print-check-row{
+    display:grid;grid-template-columns:18px 1fr;align-items:start;column-gap:9px;
+    font-size:.86rem;line-height:1.4;text-align:left;cursor:pointer;
+  }
+  .print-check-row input{margin:2px 0 0;flex:none;width:16px;height:16px;}
+  .print-check-row span{padding-top:0;}
+  .print-check-row.select-all{
+    padding-bottom:8px;margin-bottom:2px;border-bottom:1px solid var(--line);
+    font-weight:600;color:var(--ink-soft);
+  }
+  .print-go{margin-top:4px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:8px;padding:9px;font-weight:700;font-size:.85rem;cursor:pointer;}
   .print-go:hover{opacity:.92;}
 
   /* ---------- tabs ---------- */
   .tabs{
-    position:sticky;top:64px;z-index:19;
     display:flex;gap:4px;
     padding-block:10px;
     background:var(--paper);
@@ -149,7 +128,7 @@
     font-size:.9rem;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;
   }
   .tab:hover{background:var(--surface-2);}
-  .tab.active{background:var(--accent);color:var(--accent-ink);}
+  .tab.active{background:var(--current-accent,var(--accent));color:#fff;}
 
   main{padding-block:8px 40px;}
   .view[hidden]{display:none;}
@@ -162,8 +141,8 @@
     display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.08em;
     text-transform:uppercase;color:var(--accent);margin-bottom:14px;
   }
-  .hero h1{font-size:clamp(1.9rem,4.4vw,2.9rem);font-weight:700;line-height:1.25;}
-  .hero p.lede{margin-top:16px;font-size:1.05rem;color:var(--ink-soft);max-width:56ch;}
+  .hero h1{font-size:clamp(2.1rem,5.2vw,3.3rem);font-weight:900;line-height:1.22;letter-spacing:-.01em;word-break:keep-all;}
+  .hero p.lede{margin-top:16px;font-size:1.05rem;color:var(--ink-soft);}
 
   .card-grid{display:grid;gap:18px;grid-template-columns:repeat(3,1fr);margin-block:28px 36px;}
   @media (max-width:820px){.card-grid{grid-template-columns:1fr;}}
@@ -231,38 +210,57 @@
   .foot-note{text-align:center;color:var(--ink-faint);font-size:.78rem;padding-block:24px 8px;}
 
   @media print{
-    .topbar,.tabs,.no-print{display:none !important;}
+    @page{size:A4 portrait;margin:0;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .sticky-head,.no-print,.checkpoint{display:none !important;}
     .view[hidden]{display:none !important;}
     body{padding-inline:0;background:#fff;}
-    .view{break-after:page;}
-    .poster-img,.type-card,.core-band{box-shadow:none;}
+    main{padding-block:0;}
+    .view{margin:0;break-after:page;}
+    .container{max-width:none;}
+    .poster-frame{margin-top:0;}
+    .poster-badge{top:10px;box-shadow:none;}
+    .poster-img{width:100%;height:100vh;object-fit:contain;border-radius:0;box-shadow:none;display:block;}
   }
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 
 <div class="app">
 
+  <div class="sticky-head">
   <header class="topbar">
-    <div class="brand">
-      <span class="brand-mark">⚕</span>
-      <span class="brand-name">검진센터 제안 BD</span>
+    <div class="brand-block">
+      <p class="brand-preline">검진은 끝이 아니라 시작입니다.</p>
+      <div class="brand">
+        <span class="brand-title">
+          <span class="brand-mark">⚕</span>
+          <span class="brand-name">검진센터 웰체크&amp;일만사 제안</span>
+        </span>
+      </div>
+      <svg class="thread-deco" viewBox="0 0 220 56" aria-hidden="true">
+        <path d="M0,40 C40,40 80,40 110,40 C85,42 60,30 75,10 C95,0 115,15 110,40 C135,42 160,30 145,10 C125,0 105,15 110,40 C140,40 180,40 220,40"/>
+      </svg>
+      <p class="brand-subline">검진기관에서 웰체크·일만사가 통하는 이유는 하나입니다. <strong>환자와의 끈을 놓지 않는 것.</strong> 그 끈이 다음 내원으로 이어줍니다.</p>
     </div>
-    <div class="hosp-field">
-      <label for="hospInput">제안 대상 병원명</label>
-      <div class="hosp-row">
-        <input id="hospInput" type="text" value="행복의원" maxlength="24" autocomplete="off">
-        <div class="print-wrap no-print">
-          <button id="printToggle" class="print-btn-sm" type="button">출력</button>
-          <div class="print-panel" id="printPanel" hidden>
-            <p class="print-panel-title">출력할 유형 선택</p>
-            <label><input type="checkbox" class="print-check" value="type1"> 유형 01 · 검진 결과 연동형</label>
-            <label><input type="checkbox" class="print-check" value="type2"> 유형 02 · 혜택형</label>
-            <label><input type="checkbox" class="print-check" value="type3"> 유형 03 · 혜택+비대면관리형</label>
-            <button id="printGo" class="print-go" type="button">출력하기</button>
+    <div class="topbar-controls">
+      <div class="hosp-field">
+        <label for="hospInput">제안 대상 병원명</label>
+        <div class="hosp-row">
+          <input id="hospInput" type="text" value="대웅의원" maxlength="24" autocomplete="off">
+          <div class="print-wrap no-print">
+            <button id="printToggle" class="print-btn-sm" type="button">출력</button>
+            <div class="print-panel" id="printPanel" hidden>
+              <p class="print-panel-title">출력할 유형 선택</p>
+              <label class="print-check-row select-all"><input type="checkbox" id="printCheckAll"> <span>전체 선택</span></label>
+              <label class="print-check-row"><input type="checkbox" class="print-check" value="type1"> <span>유형 01 · 검진 결과 연동형</span></label>
+              <label class="print-check-row"><input type="checkbox" class="print-check" value="type2"> <span>유형 02 · 혜택형</span></label>
+              <label class="print-check-row"><input type="checkbox" class="print-check" value="type3"> <span>유형 03 · 혜택+비대면관리형</span></label>
+              <button id="printGo" class="print-go" type="button">출력하기</button>
+            </div>
           </div>
         </div>
+        <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
       </div>
-      <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
     </div>
   </header>
 
@@ -272,6 +270,7 @@
     <button class="tab" data-view="type2" role="tab">유형 02</button>
     <button class="tab" data-view="type3" role="tab">유형 03</button>
   </nav>
+  </div>
 
   <main>
 
@@ -281,7 +280,7 @@
         <div class="hero">
           <span class="eyebrow">거래처 제안 BD</span>
           <h1>우리 의원에 맞는 유형을 선택해 제안하세요</h1>
-          <p class="lede">3가지 유형별 맞춤 거래처 제안 BD입니다. <span class="hosp-name">행복의원</span>을 입력하고 원하는 유형을 열어 바로 보여주거나 출력하세요.</p>
+          <p class="lede">3가지 유형별 맞춤 거래처 제안 BD입니다. 원하는 유형을 열어 바로 보여주거나 출력하세요.</p>
         </div>
 
         <div class="card-grid">
@@ -299,11 +298,11 @@
             <span class="body">
               <span class="code">TYPE 02</span>
               <h3>혜택형</h3>
-              <p>이상소견 환자를 발굴해 포인트·건기식 혜택으로 <span class="hosp-name">행복의원</span>에 Lock-in하고, 고정 관리 환자로 전환합니다.</p>
+              <p>이상소견 환자를 발굴해 포인트·건기식 혜택으로 <span class="hosp-name">대웅의원</span>에 Lock-in하고, 고정 관리 환자로 전환합니다.</p>
               <span class="goto">브로셔 열기 →</span>
             </span>
           </button>
-          <button class="type-card" data-goto="type3" style="--tc-color:#128a6c;" type="button">
+          <button class="type-card" data-goto="type3" style="--tc-color:#3fae95;" type="button">
             <span class="thumb"><img src="assets/posters/type3-benefit-remote.png" alt=""></span>
             <span class="body">
               <span class="code">TYPE 03</span>
@@ -315,9 +314,9 @@
         </div>
 
         <div class="core-band">
-          <p class="core-band-lede">검진기관에서 웰체크·일만사가 통하는 이유는 하나입니다 — <strong>환자와의 끈을 놓지 않는 것.</strong> 그 끈이 다음 내원을 만듭니다.</p>
+          <p class="core-band-lede">그 끈을 만드는 <strong>3가지</strong></p>
           <div class="core-points">
-            <div class="core-point"><span class="core-point-mark">P</span><h4>포인트</h4><p>자가실천·교육상담 포인트를 <span class="hosp-name">행복의원</span>에서만 쓰게 합니다.</p></div>
+            <div class="core-point"><span class="core-point-mark">P</span><h4>포인트</h4><p>자가실천·교육상담 포인트를 <span class="hosp-name">대웅의원</span>에서만 쓰게 합니다.</p></div>
             <div class="core-point"><span class="core-point-mark">E</span><h4>정기 교육자료 발송</h4><p>병원 자체 자료를 포함해 주기적으로 보내며 컨택을 이어갑니다.</p></div>
             <div class="core-point"><span class="core-point-mark">C</span><h4>비대면관리(쌍방소통)</h4><p>진료실 밖에서 오가는 메시지로 다음 내원까지 관계를 잇습니다.</p></div>
           </div>
@@ -329,7 +328,7 @@
     <section id="view-type1" class="view" hidden>
       <div class="container" style="--t-accent:#2f5fd6;">
         <div class="poster-frame">
-          <span class="poster-badge"><span class="hosp-name">행복의원</span> 연동형</span>
+          <span class="poster-badge"><span class="hosp-name">대웅의원</span> 연동형</span>
           <img class="poster-img" src="assets/posters/type1-linked.png" alt="검진 결과 연동형 브로셔">
         </div>
         <div class="checkpoint" id="checkpoint-type1"></div>
@@ -341,7 +340,7 @@
     <section id="view-type2" class="view" hidden>
       <div class="container" style="--t-accent:#d9622f;">
         <div class="poster-frame">
-          <span class="poster-badge"><span class="hosp-name">행복의원</span> 혜택형</span>
+          <span class="poster-badge"><span class="hosp-name">대웅의원</span> 혜택형</span>
           <img class="poster-img" src="assets/posters/type2-benefit.png" alt="혜택형 브로셔">
         </div>
         <div class="checkpoint" id="checkpoint-type2"></div>
@@ -351,9 +350,9 @@
 
     <!-- ================= TYPE 3 : 혜택+비대면관리형 ================= -->
     <section id="view-type3" class="view" hidden>
-      <div class="container" style="--t-accent:#128a6c;">
+      <div class="container" style="--t-accent:#3fae95;">
         <div class="poster-frame">
-          <span class="poster-badge"><span class="hosp-name">행복의원</span> 혜택+비대면형</span>
+          <span class="poster-badge"><span class="hosp-name">대웅의원</span> 혜택+비대면형</span>
           <img class="poster-img" src="assets/posters/type3-benefit-remote.png" alt="혜택+비대면관리형 브로셔">
         </div>
         <div class="checkpoint" id="checkpoint-type3"></div>
@@ -393,7 +392,7 @@
     </div>
     <div class="reason">
       <span class="reason-tag lockin">Lock-in</span>
-      <div><h4>이상소견 환자의 지속관리 환자 전환</h4><p>검진에서 끝나던 관계를 진료로 이어가, 이상소견 환자를 <span class="hosp-name">행복의원</span>의 고정 환자로 전환합니다.</p></div>
+      <div><h4>이상소견 환자의 지속관리 환자 전환</h4><p>검진에서 끝나던 관계를 진료로 이어가, 이상소견 환자를 <span class="hosp-name">대웅의원</span>의 고정 환자로 전환합니다.</p></div>
     </div>
     <div class="reason">
       <span class="reason-tag diff">차별화</span>
@@ -412,13 +411,15 @@
   const printPanel = document.getElementById('printPanel');
   const printGo = document.getElementById('printGo');
   const printChecks = Array.from(document.querySelectorAll('.print-check'));
+  const printCheckAll = document.getElementById('printCheckAll');
   const views = {
     home: document.getElementById('view-home'),
     type1: document.getElementById('view-type1'),
     type2: document.getElementById('view-type2'),
     type3: document.getElementById('view-type3')
   };
-  let currentView = 'type1';
+  const typeAccent = { home:null, type1:'#2f5fd6', type2:'#d9622f', type3:'#3fae95' };
+  let currentView = 'home';
 
   function fillCheckpoints(){
     const tpl = document.getElementById('checkpointTpl');
@@ -432,7 +433,7 @@
   }
 
   function applyHospName(name){
-    const display = (name && name.trim()) ? name.trim() : '행복의원';
+    const display = (name && name.trim()) ? name.trim() : '대웅의원';
     document.querySelectorAll('.hosp-name').forEach(function(el){ el.textContent = display; });
   }
 
@@ -444,11 +445,19 @@
     currentView = name;
     Object.keys(views).forEach(function(key){ views[key].hidden = (key !== name); });
     tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.view === name); });
+    const accent = typeAccent[name];
+    if(accent){ document.documentElement.style.setProperty('--current-accent', accent); }
+    else { document.documentElement.style.removeProperty('--current-accent'); }
     window.scrollTo(0,0);
   }
 
   function syncPrintChecks(){
     printChecks.forEach(function(c){ c.checked = (c.value === currentView); });
+    syncPrintCheckAll();
+  }
+
+  function syncPrintCheckAll(){
+    printCheckAll.checked = printChecks.every(function(c){ return c.checked; });
   }
 
   function printSelected(keys){
@@ -482,6 +491,12 @@
       printPanel.hidden = !willOpen;
       if(willOpen) syncPrintChecks();
     });
+    printCheckAll.addEventListener('change', function(){
+      printChecks.forEach(function(c){ c.checked = printCheckAll.checked; });
+    });
+    printChecks.forEach(function(c){
+      c.addEventListener('change', syncPrintCheckAll);
+    });
     document.addEventListener('click', function(e){
       if(!printPanel.hidden && !printPanel.contains(e.target) && e.target !== printToggle){
         printPanel.hidden = true;
@@ -501,7 +516,7 @@
     const initialHosp = (data && data.hospName) || loadPersistedHosp() || hospInput.value;
     hospInput.value = initialHosp;
     applyHospName(initialHosp);
-    showView((data && data.view) || 'type1');
+    showView((data && data.view) || 'home');
   }
 
   if(window.claude && window.claude.hot && window.claude.hot.snapshot){
