@@ -186,13 +186,40 @@
 
   /* ---------- poster (actual brochure image + hospital badge) ---------- */
   .poster-frame{position:relative;margin-top:50px;}
-  .poster-img{display:block;width:100%;border-radius:16px;box-shadow:var(--shadow);}
+  .poster-img{display:block;width:100%;border-radius:16px;box-shadow:var(--shadow);cursor:zoom-in;}
   .poster-badge{
     position:absolute;top:-42px;left:0;z-index:5;background:var(--t-accent);color:#fff;
     font-weight:700;font-size:.85rem;padding:7px 18px;border-radius:999px;
     box-shadow:0 6px 14px -4px rgba(0,0,0,.4);font-family:var(--font-mono);letter-spacing:.01em;
     max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   }
+  .poster-zoom{
+    position:absolute;bottom:16px;right:16px;z-index:6;
+    display:flex;align-items:center;gap:6px;
+    background:rgba(16,24,38,.72);color:#fff;border:none;
+    padding:9px 16px;border-radius:999px;font-size:.85rem;font-weight:600;
+    cursor:pointer;opacity:0;transition:opacity .15s;
+  }
+  .poster-frame:hover .poster-zoom,
+  .poster-zoom:focus-visible{opacity:1;}
+  @media (hover:none){.poster-zoom{opacity:1;}}
+  .poster-zoom:hover{background:rgba(16,24,38,.88);}
+
+  .lightbox{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(8,12,18,.88);
+    display:flex;align-items:center;justify-content:center;
+    padding:28px;
+  }
+  .lightbox[hidden]{display:none;}
+  .lightbox img{max-width:92vw;max-height:92vh;display:block;border-radius:8px;box-shadow:0 20px 60px -10px rgba(0,0,0,.6);}
+  .lightbox-close{
+    position:absolute;top:18px;right:18px;
+    width:42px;height:42px;border-radius:50%;
+    background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3);
+    font-size:1.3rem;line-height:1;cursor:pointer;
+  }
+  .lightbox-close:hover{background:rgba(255,255,255,.26);}
 
   /* ---------- checkpoint (shared across posters) ---------- */
   .checkpoint{padding-block:32px 8px;}
@@ -224,7 +251,7 @@
   @media print{
     @page{size:A4 portrait;margin:0;}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-    .sticky-head,.no-print,.checkpoint{display:none !important;}
+    .sticky-head,.no-print,.checkpoint,.poster-zoom,.lightbox{display:none !important;}
     .view[hidden]{display:none !important;}
     body{padding-inline:0;background:#fff;}
     main{padding-block:0;}
@@ -344,6 +371,7 @@
         <div class="poster-frame">
           <span class="poster-badge"><span class="hosp-name">대웅의원</span> X 일만사 연동형</span>
           <img class="poster-img" src="assets/posters/type1-linked.png" alt="검진 결과 연동형 브로셔">
+          <button class="poster-zoom no-print" type="button" data-zoom-open>🔍 크게 보기</button>
         </div>
         <div class="checkpoint" id="checkpoint-type1"></div>
         <button class="print-btn no-print" data-print-single="type1" type="button">이 유형만 인쇄하기</button>
@@ -356,6 +384,7 @@
         <div class="poster-frame">
           <span class="poster-badge"><span class="hosp-name">대웅의원</span> X 일만사 혜택형</span>
           <img class="poster-img" src="assets/posters/type2-benefit.png" alt="혜택형 브로셔">
+          <button class="poster-zoom no-print" type="button" data-zoom-open>🔍 크게 보기</button>
         </div>
         <div class="checkpoint" id="checkpoint-type2"></div>
         <button class="print-btn no-print" data-print-single="type2" type="button">이 유형만 인쇄하기</button>
@@ -368,6 +397,7 @@
         <div class="poster-frame">
           <span class="poster-badge"><span class="hosp-name">대웅의원</span> X 일만사 혜택+비대면형</span>
           <img class="poster-img" src="assets/posters/type3-benefit-remote.png" alt="혜택+비대면관리형 브로셔">
+          <button class="poster-zoom no-print" type="button" data-zoom-open>🔍 크게 보기</button>
         </div>
         <div class="checkpoint" id="checkpoint-type3"></div>
         <button class="print-btn no-print" data-print-single="type3" type="button">이 유형만 인쇄하기</button>
@@ -377,6 +407,11 @@
   </main>
 
   <p class="foot-note no-print">내부 제안용 자료 · 발표 전 병원명을 반드시 확인하세요</p>
+</div>
+
+<div class="lightbox no-print" id="posterLightbox" hidden>
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="닫기">✕</button>
+  <img id="lightboxImg" src="" alt="">
 </div>
 
 <template id="checkpointTpl">
@@ -426,6 +461,10 @@
   const printGo = document.getElementById('printGo');
   const printChecks = Array.from(document.querySelectorAll('.print-check'));
   const printCheckAll = document.getElementById('printCheckAll');
+  const lightbox = document.getElementById('posterLightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const zoomTriggers = Array.from(document.querySelectorAll('.poster-img, [data-zoom-open]'));
   const views = {
     home: document.getElementById('view-home'),
     type1: document.getElementById('view-type1'),
@@ -456,6 +495,7 @@
 
   function showView(name){
     if(!views[name]) return;
+    closeLightbox();
     currentView = name;
     Object.keys(views).forEach(function(key){ views[key].hidden = (key !== name); });
     tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.view === name); });
@@ -490,7 +530,34 @@
     setTimeout(restore, 2000);
   }
 
+  function openLightbox(imgEl){
+    lightboxImg.src = imgEl.src;
+    lightboxImg.alt = imgEl.alt || '';
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(){
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+    document.body.style.overflow = '';
+  }
+
   function bindEvents(){
+    zoomTriggers.forEach(function(el){
+      el.addEventListener('click', function(){
+        const frame = el.closest('.poster-frame');
+        const img = frame ? frame.querySelector('.poster-img') : null;
+        if(img) openLightbox(img);
+      });
+    });
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function(e){
+      if(e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+    });
     hospInput.addEventListener('input', function(){
       applyHospName(hospInput.value);
       persistHosp(hospInput.value);
