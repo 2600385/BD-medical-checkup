@@ -1,7 +1,7 @@
 # BD-medical-checkup
 검진센터 브로셔
 
-## 검진센터 제안 BD 툴 (`bd-proposal-tool.html`)
+## 검진센터 제안 BD 툴 (`index.html`)
 
 검진센터에 일만사·웰체크를 제안할 때 쓰는 실제 브로셔 3종(`assets/posters/`)을 보여주는 HTML 툴입니다.
 브라우저에서 파일을 열면 상단에서 병원명을 입력할 수 있고, 각 브로셔 좌측 상단에 병원명+유형 배지가 바로 얹힙니다.
