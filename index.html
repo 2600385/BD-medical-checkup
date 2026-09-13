@@ -60,13 +60,13 @@
     margin-inline:-16px;
     background:var(--band-bg);
     box-shadow:0 12px 28px -20px rgba(20,32,35,.45);
-    overflow:hidden;
   }
-  .topbar-inner{position:relative;display:flex;flex-direction:column;max-width:1040px;margin-inline:auto;width:100%;padding-inline:16px;}
-  .brand-block{order:1;}
-  .topbar-controls{order:2;}
-  .thread-deco{order:3;}
-  .brand-block{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding-right:150px;}
+  .topbar-inner{
+    position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    align-items:start;column-gap:16px;max-width:1040px;margin-inline:auto;width:100%;padding-inline:16px;
+  }
+  .topbar-spacer{grid-column:1;}
+  .brand-block{grid-column:2;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;}
   .brand-preline{font-size:.85rem;font-weight:600;color:var(--ink-soft);}
   .brand{display:flex;align-items:center;justify-content:center;}
   .brand-title{display:inline-flex;align-items:center;gap:10px;}
@@ -74,22 +74,13 @@
   .brand-name{font-family:var(--font-display);font-weight:900;font-size:clamp(1.3rem,4.4vw,1.85rem);letter-spacing:-.02em;text-wrap:balance;}
   .brand-subline{font-size:.83rem;color:var(--ink-faint);max-width:52ch;}
   .brand-subline strong{color:var(--accent);font-weight:700;}
-  .thread-deco{display:block;width:100%;height:46px;margin-top:6px;overflow:visible;}
+  .thread-deco{grid-column:1/-1;display:block;width:100%;height:46px;margin-top:6px;overflow:visible;}
   .thread-deco path{fill:none;stroke:#20242b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.55;}
-  .topbar-controls{
-    position:absolute;top:0;right:16px;
-    display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:flex-end;
-  }
-  @media (max-width:680px){
-    .brand-block{padding-right:0;}
-    .topbar-controls{position:static;margin-top:14px;justify-content:center;width:100%;}
-  }
+  .topbar-controls{grid-column:3;justify-self:end;align-self:start;}
   .hosp-field{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
-  @media (max-width:680px){.hosp-field{align-items:center;}}
   .hosp-field label{font-size:.7rem;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;}
-  .hosp-row{display:flex;gap:8px;align-items:center;}
-  .hosp-row input{
-    width:min(200px,50vw);
+  .hosp-field input{
+    width:min(200px,40vw);
     border:1px solid var(--line-strong);
     border-radius:8px;
     background:var(--surface);
@@ -100,6 +91,15 @@
     text-align:right;
   }
   .hosp-hint{font-size:.72rem;color:var(--ink-faint);}
+  @media (max-width:680px){
+    .topbar-inner{display:flex;flex-direction:column;align-items:center;}
+    .topbar-spacer{display:none;}
+    .brand-block{order:1;}
+    .topbar-controls{order:2;grid-column:auto;justify-self:auto;margin-top:14px;}
+    .thread-deco{order:3;}
+    .hosp-field{align-items:center;}
+    .hosp-field input{width:min(240px,70vw);}
+  }
 
   .print-wrap{position:relative;}
   .print-btn-sm{
@@ -110,7 +110,7 @@
   .print-panel{
     position:absolute;top:calc(100% + 8px);right:0;z-index:30;
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
-    padding:16px;box-shadow:var(--shadow);width:270px;display:flex;flex-direction:column;gap:12px;
+    padding:16px;box-shadow:var(--shadow);width:270px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;gap:12px;
   }
   .print-panel[hidden]{display:none;}
   .print-panel-title{font-size:.78rem;font-weight:700;color:var(--ink-soft);margin-bottom:2px;}
@@ -129,12 +129,12 @@
 
   /* ---------- tabs ---------- */
   .tabs{
-    display:flex;gap:4px;
+    display:flex;gap:12px;align-items:center;justify-content:space-between;
     padding-block:10px;
     background:var(--paper);
     border-bottom:1px solid var(--line);
-    overflow-x:auto;
   }
+  .tabs-group{display:flex;gap:4px;overflow-x:auto;}
   .tab{
     flex:0 0 auto;border:1px solid transparent;background:transparent;color:var(--ink-soft);
     font-size:.9rem;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;
@@ -242,26 +242,7 @@
   <div class="sticky-head">
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="topbar-controls">
-        <div class="hosp-field">
-          <label for="hospInput">제안 대상 병원명</label>
-          <div class="hosp-row">
-            <input id="hospInput" type="text" value="대웅의원" maxlength="24" autocomplete="off">
-            <div class="print-wrap no-print">
-              <button id="printToggle" class="print-btn-sm" type="button">출력</button>
-              <div class="print-panel" id="printPanel" hidden>
-                <p class="print-panel-title">출력할 유형 선택</p>
-                <label class="print-check-row select-all"><input type="checkbox" id="printCheckAll"> <span>전체 선택</span></label>
-                <label class="print-check-row"><input type="checkbox" class="print-check" value="type1"> <span>유형 01 · 검진 결과 연동형</span></label>
-                <label class="print-check-row"><input type="checkbox" class="print-check" value="type2"> <span>유형 02 · 혜택형</span></label>
-                <label class="print-check-row"><input type="checkbox" class="print-check" value="type3"> <span>유형 03 · 혜택+비대면관리형</span></label>
-                <button id="printGo" class="print-go" type="button">출력하기</button>
-              </div>
-            </div>
-          </div>
-          <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
-        </div>
-      </div>
+      <div class="topbar-spacer" aria-hidden="true"></div>
       <div class="brand-block">
         <p class="brand-preline">검진은 끝이 아니라 시작입니다.</p>
         <div class="brand">
@@ -270,7 +251,14 @@
             <span class="brand-name">검진센터 웰체크&amp;일만사 제안</span>
           </span>
         </div>
-        <p class="brand-subline">검진기관에서 웰체크·일만사가 통하는 이유는 하나입니다. <strong>환자와의 끈을 놓지 않는 것.</strong> 그 끈이 다음 내원으로 이어줍니다.</p>
+        <p class="brand-subline">검진기관에서 웰체크·일만사가 통하는 이유는 하나입니다.<br>환자와의 끈을 놓지 않는 것. 그 끈이 다음 내원으로 이어줍니다.</p>
+      </div>
+      <div class="topbar-controls">
+        <div class="hosp-field">
+          <label for="hospInput">제안 대상 병원명</label>
+          <input id="hospInput" type="text" value="대웅의원" maxlength="24" autocomplete="off">
+          <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
+        </div>
       </div>
       <svg class="thread-deco" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0,30 C120,10 220,46 340,26 C450,8 520,38 620,22 C700,10 760,26 820,20 C845,17 858,8 856,-4 C854,-16 838,-18 832,-8 C826,2 842,14 862,10 C878,7 886,-2 882,-14"/>
@@ -279,10 +267,23 @@
   </header>
 
   <nav class="tabs" role="tablist">
-    <button class="tab" data-view="home" role="tab">홈</button>
-    <button class="tab" data-view="type1" role="tab">유형 01</button>
-    <button class="tab" data-view="type2" role="tab">유형 02</button>
-    <button class="tab" data-view="type3" role="tab">유형 03</button>
+    <div class="tabs-group">
+      <button class="tab" data-view="home" role="tab">홈</button>
+      <button class="tab" data-view="type1" role="tab">유형 01</button>
+      <button class="tab" data-view="type2" role="tab">유형 02</button>
+      <button class="tab" data-view="type3" role="tab">유형 03</button>
+    </div>
+    <div class="print-wrap no-print">
+      <button id="printToggle" class="print-btn-sm" type="button"><span aria-hidden="true">🖨️</span> 출력</button>
+      <div class="print-panel" id="printPanel" hidden>
+        <p class="print-panel-title">출력할 유형 선택</p>
+        <label class="print-check-row select-all"><input type="checkbox" id="printCheckAll"> <span>전체 선택</span></label>
+        <label class="print-check-row"><input type="checkbox" class="print-check" value="type1"> <span>유형 01 · 검진 결과 연동형</span></label>
+        <label class="print-check-row"><input type="checkbox" class="print-check" value="type2"> <span>유형 02 · 혜택형</span></label>
+        <label class="print-check-row"><input type="checkbox" class="print-check" value="type3"> <span>유형 03 · 혜택+비대면관리형</span></label>
+        <button id="printGo" class="print-go" type="button">출력하기</button>
+      </div>
+    </div>
   </nav>
   </div>
 
