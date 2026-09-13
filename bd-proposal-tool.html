@@ -1,0 +1,714 @@
+<title>일만사·웰체크 제안 키트</title>
+<style>
+  :root{
+    --ink:#142023;
+    --ink-soft:#45585c;
+    --ink-faint:#7c8e8f;
+    --paper:#f3f6f5;
+    --surface:#ffffff;
+    --surface-2:#e9f0ee;
+    --line:#d7e0dd;
+    --line-strong:#b9c8c4;
+    --accent:#0f6e5c;
+    --accent-ink:#ffffff;
+    --accent-soft:#dcece6;
+    --gold:#a97b1f;
+    --gold-ink:#3a2c0c;
+    --gold-soft:#f4e6c9;
+    --shadow:0 1px 2px rgba(20,32,35,.06),0 8px 24px -12px rgba(20,32,35,.18);
+    --font-display:'Noto Serif KR','Noto Serif',serif;
+    --font-body:'IBM Plex Sans KR','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eaf2ef;
+      --ink-soft:#a9c0bb;
+      --ink-faint:#72908a;
+      --paper:#0e1615;
+      --surface:#16211f;
+      --surface-2:#1b2926;
+      --line:#2a3735;
+      --line-strong:#3a4a47;
+      --accent:#52d8b0;
+      --accent-ink:#06231b;
+      --accent-soft:#173a30;
+      --gold:#e0b354;
+      --gold-ink:#2c2005;
+      --gold-soft:#332912;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eaf2ef;
+    --ink-soft:#a9c0bb;
+    --ink-faint:#72908a;
+    --paper:#0e1615;
+    --surface:#16211f;
+    --surface-2:#1b2926;
+    --line:#2a3735;
+    --line-strong:#3a4a47;
+    --accent:#52d8b0;
+    --accent-ink:#06231b;
+    --accent-soft:#173a30;
+    --gold:#e0b354;
+    --gold-ink:#2c2005;
+    --gold-soft:#332912;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    padding-inline:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    color:var(--ink);
+    text-wrap:balance;
+    margin:0;
+  }
+  p{margin:0;}
+  button{font-family:inherit;}
+  input{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;animation:none !important;}
+  }
+
+  .app{max-width:1040px;margin-inline:auto;}
+
+  /* ---------- header ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    display:flex;flex-wrap:wrap;gap:14px 24px;
+    align-items:center;justify-content:space-between;
+    padding-block:16px;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:baseline;gap:8px;}
+  .brand-mark{
+    font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--accent);
+  }
+  .brand-name{font-family:var(--font-display);font-weight:600;font-size:1.05rem;}
+  .brand-name .dot{color:var(--gold);}
+  .hosp-field{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
+  .hosp-field label{font-size:.7rem;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;}
+  .hosp-field input{
+    width:min(220px,60vw);
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    background:var(--surface);
+    color:var(--ink);
+    font-weight:600;
+    font-size:1rem;
+    padding:8px 12px;
+    text-align:right;
+  }
+  .hosp-hint{font-size:.72rem;color:var(--ink-faint);}
+
+  /* ---------- tabs ---------- */
+  .tabs{
+    position:sticky;top:64px;z-index:19;
+    display:flex;gap:4px;
+    padding-block:10px;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;
+  }
+  .tab{
+    flex:0 0 auto;
+    border:1px solid transparent;
+    background:transparent;
+    color:var(--ink-soft);
+    font-size:.9rem;font-weight:600;
+    padding:8px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .tab:hover{background:var(--surface-2);}
+  .tab.active{background:var(--accent);color:var(--accent-ink);}
+
+  main{padding-block:8px 40px;}
+  .view[hidden]{display:none;}
+  .container{max-width:720px;margin-inline:auto;}
+  .container-wide{max-width:1000px;margin-inline:auto;}
+
+  /* ---------- home ---------- */
+  .hero{padding-block:40px 8px;}
+  .eyebrow{
+    display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+  }
+  .hero h1{font-size:clamp(1.9rem,4.4vw,2.9rem);font-weight:700;line-height:1.25;}
+  .hero p.lede{margin-top:16px;font-size:1.05rem;color:var(--ink-soft);max-width:56ch;}
+
+  .card-grid{
+    display:grid;gap:18px;
+    grid-template-columns:repeat(3,1fr);
+    margin-block:28px 40px;
+  }
+  @media (max-width:820px){.card-grid{grid-template-columns:1fr;}}
+  .type-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px 20px;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .type-card .code{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:var(--ink-faint);}
+  .type-card h3{font-size:1.2rem;font-weight:600;line-height:1.35;}
+  .type-card p{color:var(--ink-soft);font-size:.92rem;flex:1;}
+  .chip{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:.72rem;font-weight:600;
+    border-radius:999px;padding:4px 10px;width:fit-content;
+  }
+  .chip-gold{background:var(--gold-soft);color:var(--gold-ink);}
+  .chip-common{background:var(--accent-soft);color:var(--accent);}
+  .chip-example{border:1px dashed var(--line-strong);color:var(--ink-faint);}
+  .card-btn{
+    align-self:flex-start;
+    border:1px solid var(--ink);
+    background:transparent;color:var(--ink);
+    font-size:.85rem;font-weight:600;
+    padding:8px 16px;border-radius:8px;cursor:pointer;
+  }
+  .card-btn:hover{background:var(--ink);color:var(--paper);}
+
+  /* ---------- core band (recurring message) ---------- */
+  .core-band{
+    background:var(--surface-2);
+    border-radius:18px;
+    padding:28px 24px;
+    margin-block:8px 32px;
+  }
+  .core-band-lede{font-size:1.05rem;max-width:64ch;}
+  .core-band-lede strong{color:var(--accent);}
+  .core-points{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+    margin-top:20px;
+  }
+  @media (max-width:720px){.core-points{grid-template-columns:1fr;}}
+  .core-point{display:flex;flex-direction:column;gap:6px;}
+  .core-point-mark{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:28px;height:28px;border-radius:50%;
+    background:var(--accent);color:var(--accent-ink);
+    font-family:var(--font-mono);font-weight:600;font-size:.85rem;
+  }
+  .core-point h4{font-size:.98rem;font-weight:600;}
+  .core-point p{font-size:.85rem;color:var(--ink-soft);}
+
+  /* ---------- brochure common ---------- */
+  .brochure-head{padding-block:36px 4px;}
+  .proposal-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:999px;padding:5px 12px;margin-bottom:18px;
+  }
+  .proposal-badge .hosp-name{color:var(--accent);font-weight:600;}
+  .brochure-head h1{font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1.3;}
+  .brochure-head p.lede{margin-top:14px;font-size:1rem;color:var(--ink-soft);max-width:60ch;}
+
+  .section{padding-block:26px;border-top:1px solid var(--line);}
+  .section h2{font-size:1.3rem;font-weight:600;margin-bottom:14px;}
+  .section > p{color:var(--ink-soft);max-width:64ch;}
+
+  .callout{
+    border-radius:14px;padding:18px 20px;margin-top:16px;
+    border-left:4px solid var(--accent);background:var(--accent-soft);
+  }
+  .callout p{color:var(--ink);font-size:.95rem;max-width:60ch;}
+  .callout-gold{border-left-color:var(--gold);background:var(--gold-soft);}
+  .callout-gold p{color:var(--gold-ink);}
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .callout-gold p{color:var(--ink);} }
+  :root[data-theme="dark"] .callout-gold p{color:var(--ink);}
+
+  .common-note{
+    display:flex;flex-wrap:wrap;align-items:center;gap:12px;
+    border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;margin-top:16px;background:var(--surface);
+  }
+  .common-note p{color:var(--ink-soft);font-size:.92rem;flex:1;min-width:220px;}
+  .common-note strong{color:var(--ink);}
+
+  /* ---------- fee card (type 1) ---------- */
+  .fee-card{
+    border:1px solid var(--line);border-radius:16px;
+    background:var(--surface);padding:22px;margin-top:16px;box-shadow:var(--shadow);
+  }
+  .fee-card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+  .fee-card-head h3{font-size:1.05rem;font-weight:600;}
+  .fee-caption{font-size:.85rem;color:var(--ink-faint);margin-top:6px;}
+  .fee-rows{margin-top:16px;display:flex;flex-direction:column;}
+  .fee-row{
+    display:grid;grid-template-columns:1fr 1.3fr auto;gap:10px 16px;
+    align-items:center;padding-block:12px;border-top:1px solid var(--line);
+  }
+  @media (max-width:600px){.fee-row{grid-template-columns:1fr;}}
+  .fee-label{font-weight:600;font-size:.94rem;}
+  .fee-desc{font-size:.84rem;color:var(--ink-faint);}
+  .fee-amount{display:flex;align-items:center;gap:6px;justify-self:end;font-variant-numeric:tabular-nums;}
+  @media (max-width:600px){.fee-amount{justify-self:start;}}
+  .fee-input{
+    width:9ch;border:1px solid var(--line-strong);border-radius:8px;
+    background:var(--paper);color:var(--ink);
+    font-family:var(--font-mono);font-size:.95rem;text-align:right;
+    padding:7px 9px;
+  }
+  .fee-total{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-top:2px solid var(--ink);margin-top:6px;padding-top:14px;
+  }
+  .fee-total span{font-weight:600;color:var(--ink-soft);}
+  .fee-total strong{font-family:var(--font-mono);font-size:1.35rem;font-variant-numeric:tabular-nums;}
+
+  /* ---------- flow (type 2) ---------- */
+  .flow{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:0;}
+  .flow li{display:grid;grid-template-columns:auto 1fr;gap:14px;padding-block:16px;border-top:1px solid var(--line);}
+  .flow li:first-child{border-top:none;}
+  .flow-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:32px;height:32px;border-radius:50%;
+    background:var(--surface-2);color:var(--accent);
+    font-family:var(--font-mono);font-weight:600;
+  }
+  .flow h4{font-size:.98rem;font-weight:600;margin-bottom:3px;}
+  .flow p{font-size:.88rem;color:var(--ink-soft);}
+
+  /* ---------- wellcheck mock (type 3) ---------- */
+  .wellcheck-mock{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:18px;}
+  .mock-badge{
+    font-size:.72rem;font-weight:600;color:var(--ink-faint);
+    border:1px dashed var(--line-strong);border-radius:999px;padding:4px 12px;
+  }
+  .phone-frame{
+    width:min(280px,100%);border-radius:30px;
+    border:2px dashed var(--line-strong);
+    padding:12px;background:var(--surface);
+  }
+  .phone-screen{
+    background:var(--paper);border-radius:20px;padding:16px;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .ws-header{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.05em;color:var(--ink-faint);text-align:center;}
+  .ws-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+  .ws-card-title{display:block;font-size:.78rem;color:var(--ink-faint);margin-bottom:6px;}
+  .ws-point{display:flex;flex-direction:column;gap:6px;}
+  .ws-point > span:first-child{font-size:.82rem;color:var(--ink-soft);}
+  .ws-point strong{font-family:var(--font-mono);font-size:1.2rem;color:var(--gold);}
+  .ws-bar{height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden;}
+  .ws-bar span{display:block;height:100%;background:var(--gold);}
+  .ws-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:.85rem;}
+  .ws-chat p{font-size:.85rem;color:var(--ink-soft);font-style:italic;}
+
+  .tag3-hero{font-size:clamp(1.5rem,3.4vw,2.1rem);color:var(--accent);font-weight:700;margin-top:6px;}
+
+  .print-btn{
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
+    font-size:.82rem;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;
+    margin-top:18px;
+  }
+  .print-btn:hover{background:var(--surface-2);}
+
+  .foot-note{
+    text-align:center;color:var(--ink-faint);font-size:.78rem;
+    padding-block:24px 8px;
+  }
+
+  @media print{
+    .topbar,.tabs,.no-print{display:none !important;}
+    .view[hidden]{display:none !important;}
+    body{padding-inline:0;background:#fff;color:#111;}
+    .core-band,.fee-card,.type-card,.common-note,.callout{box-shadow:none;}
+  }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">⚕</span>
+      <span class="brand-name">일만사<span class="dot">·</span>웰체크 제안 키트</span>
+    </div>
+    <div class="hosp-field">
+      <label for="hospInput">제안 대상 병원명</label>
+      <input id="hospInput" type="text" value="행복의원" maxlength="24" autocomplete="off">
+      <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-view="home" role="tab">홈</button>
+    <button class="tab" data-view="type1" role="tab">유형 01 · 연동형</button>
+    <button class="tab" data-view="type2" role="tab">유형 02 · 혜택형</button>
+    <button class="tab" data-view="type3" role="tab">유형 03 · 혜택+비대면</button>
+  </nav>
+
+  <main>
+
+    <!-- ================= HOME ================= -->
+    <section id="view-home" class="view">
+      <div class="container-wide">
+        <div class="hero">
+          <span class="eyebrow">검진센터 제안 BD</span>
+          <h1>우리 의원에 맞는 유형을 선택해 제안하세요</h1>
+          <p class="lede">검진 이후가 곧 다음 내원입니다. 세 가지 BD 유형 중 <span class="hosp-name">행복의원</span>의 검진 연계 방식에 맞는 안을 골라, 병원명을 넣은 채로 바로 보여주거나 인쇄해 전달하세요.</p>
+        </div>
+
+        <div class="card-grid">
+          <div class="type-card">
+            <span class="code">TYPE 01</span>
+            <h3>검진결과 연동형</h3>
+            <p>세 유형 중 인당 수가가 가장 높은 방식. 검진 결과가 곧바로 케어플랜·진료·검사로 연결되는 흐름을 수가 항목까지 함께 제시합니다.</p>
+            <span class="chip chip-gold">최고 수가</span>
+            <button class="card-btn" data-goto="type1">자세히 보기</button>
+          </div>
+          <div class="type-card">
+            <span class="code">TYPE 02</span>
+            <h3>검진결과 혜택형</h3>
+            <p>고위험군을 발굴해 일만사에 등록시키고, 포인트로 <span class="hosp-name">행복의원</span> 방문을 유도하는 Lock-in 중심 방식입니다. 반복 수가보다 재방문 설계가 핵심입니다.</p>
+            <span class="chip chip-gold">Lock-in</span>
+            <button class="card-btn" data-goto="type2">자세히 보기</button>
+          </div>
+          <div class="type-card">
+            <span class="code">TYPE 03</span>
+            <h3>혜택형 + 비대면관리형</h3>
+            <p>포인트 혜택에 웰체크 비대면관리를 더해, 진료실 밖에서도 접점을 이어갑니다. 정기적인 교육자료 발송으로 컨택을 지속합니다.</p>
+            <span class="chip chip-gold">지속 컨택</span>
+            <button class="card-btn" data-goto="type3">자세히 보기</button>
+          </div>
+        </div>
+
+        <div class="core-band">
+          <p class="core-band-lede">검진기관에서 웰체크·일만사가 통하는 이유는 하나입니다 — <strong>환자와의 끈을 놓지 않는 것.</strong> 그 끈이 다음 내원을 만듭니다.</p>
+          <div class="core-points">
+            <div class="core-point"><span class="core-point-mark">P</span><h4>포인트</h4><p>자가실천·교육상담 포인트를 우리 의원에서만 쓰게 합니다.</p></div>
+            <div class="core-point"><span class="core-point-mark">E</span><h4>정기 교육자료 발송</h4><p>병원 자체 자료를 포함해 주기적으로 보내며 컨택을 이어갑니다.</p></div>
+            <div class="core-point"><span class="core-point-mark">C</span><h4>비대면관리(쌍방소통)</h4><p>진료실 밖에서 오가는 메시지로 다음 내원까지 관계를 잇습니다.</p></div>
+          </div>
+        </div>
+
+        <div class="common-note">
+          <span class="chip chip-common">3유형 공통</span>
+          <p><strong>케어플랜 수립 시 건강기능식품 제공</strong> — 검진만 하는 다른 기관과 차별화되는 <span class="hosp-name">행복의원</span>만의 케어입니다.</p>
+        </div>
+        <div class="common-note">
+          <span class="chip chip-common">수가 발생 유형(01·03) 공통</span>
+          <p><strong>검체검사 위수탁제도 개편</strong> — 개편된 위수탁 구조에 맞춰 검체검사 수익 구조도 함께 정비해 안내합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TYPE 1 ================= -->
+    <section id="view-type1" class="view" hidden>
+      <div class="container">
+        <div class="brochure-head">
+          <span class="proposal-badge">제안 대상 · <span class="hosp-name">행복의원</span> · TYPE 01</span>
+          <h1>검진 그 자리에서, 진료로 잇습니다</h1>
+          <p class="lede">검진결과 연동형은 세 유형 중 인당 수가가 가장 높은 방식입니다. 다만 그 수가가 무엇으로 구성되는지가 드러나지 않으면 설득력이 떨어집니다. <span class="hosp-name">행복의원</span>에는 수가 흐름을 항목별로 짚어 제안합니다.</p>
+        </div>
+
+        <div class="section" style="border-top:none;padding-top:6px;">
+          <h2>수가 연계 흐름</h2>
+          <p>검진 결과 상담 이후 이어지는 케어 항목과 수가를 한 화면에서 확인합니다.</p>
+          <div class="fee-card">
+            <div class="fee-card-head">
+              <h3>항목별 예상 수가</h3>
+              <span class="chip chip-example">예시 금액 · 수정 가능</span>
+            </div>
+            <p class="fee-caption"><span class="hosp-name">행복의원</span> 수가 기준으로 아래 숫자를 바로 고쳐서 보여주세요.</p>
+            <div class="fee-rows">
+              <div class="fee-row">
+                <span class="fee-label">케어플랜 수립료</span>
+                <span class="fee-desc">검진 결과 상담 직후, 1회</span>
+                <span class="fee-amount"><input type="text" class="fee-input" id="fee1" value="10,000" inputmode="numeric" aria-label="케어플랜 수립료">원</span>
+              </div>
+              <div class="fee-row">
+                <span class="fee-label">교육상담료</span>
+                <span class="fee-desc">회당 산정</span>
+                <span class="fee-amount"><input type="text" class="fee-input" id="fee2" value="20,000" inputmode="numeric" aria-label="교육상담료">원</span>
+              </div>
+              <div class="fee-row">
+                <span class="fee-label">점검 및 평가료</span>
+                <span class="fee-desc">경과 확인 시</span>
+                <span class="fee-amount"><input type="text" class="fee-input" id="fee3" value="15,000" inputmode="numeric" aria-label="점검 및 평가료">원</span>
+              </div>
+              <div class="fee-row">
+                <span class="fee-label">진료 · 검사비</span>
+                <span class="fee-desc">필요 진료·검사 발생 시</span>
+                <span class="fee-amount"><input type="text" class="fee-input" id="fee4" value="25,000" inputmode="numeric" aria-label="진료 및 검사비">원</span>
+              </div>
+            </div>
+            <div class="fee-total">
+              <span>예상 인당 청구액</span>
+              <strong id="feeTotal1">0원</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>공통 반영 사항</h2>
+          <div class="common-note">
+            <span class="chip chip-common">3유형 공통</span>
+            <p><strong>케어플랜 수립 시 건강기능식품 제공</strong> — 검진만 하는 다른 기관과 차별화되는 <span class="hosp-name">행복의원</span>만의 케어입니다.</p>
+          </div>
+          <div class="common-note">
+            <span class="chip chip-common">수가 발생 유형 공통</span>
+            <p><strong>검체검사 위수탁제도 개편</strong> — 개편된 위수탁 구조에 맞춰 <span class="hosp-name">행복의원</span>의 검체검사 수익 구조도 함께 정비해 안내합니다.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="core-band" style="margin-block:0;">
+            <p class="core-band-lede">수가로 시작하되, 끝은 관계입니다 — <strong>환자와의 끈을 놓지 않는 것.</strong></p>
+            <div class="core-points">
+              <div class="core-point"><span class="core-point-mark">P</span><h4>포인트</h4><p>자가실천·교육상담 포인트를 <span class="hosp-name">행복의원</span>에서만 쓰게 합니다.</p></div>
+              <div class="core-point"><span class="core-point-mark">E</span><h4>정기 교육자료 발송</h4><p>병원 자체 자료를 포함해 주기적으로 보내며 컨택을 이어갑니다.</p></div>
+              <div class="core-point"><span class="core-point-mark">C</span><h4>비대면관리(쌍방소통)</h4><p>진료실 밖에서 오가는 메시지로 다음 내원까지 관계를 잇습니다.</p></div>
+            </div>
+          </div>
+          <button class="print-btn no-print" data-print>이 유형 인쇄하기</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TYPE 2 ================= -->
+    <section id="view-type2" class="view" hidden>
+      <div class="container">
+        <div class="brochure-head">
+          <span class="proposal-badge">제안 대상 · <span class="hosp-name">행복의원</span> · TYPE 02</span>
+          <h1>어디서 검진받았든, 우리 의원으로</h1>
+          <p class="lede">혜택형의 핵심은 반복되는 수가가 아니라, 다른 검진기관에서 검진받은 환자까지 <span class="hosp-name">행복의원</span>에 묶어두는 Lock-in 효과입니다.</p>
+        </div>
+
+        <div class="section" style="border-top:none;padding-top:6px;">
+          <h2>환자 발굴 → 등록 → 케어 흐름</h2>
+          <ol class="flow">
+            <li>
+              <span class="flow-num">1</span>
+              <div><h4>고위험군 발굴</h4><p>검진 결과에서 고혈당 등 고위험군을 가려냅니다.</p></div>
+            </li>
+            <li>
+              <span class="flow-num">2</span>
+              <div><h4>일만사 등록</h4><p>발굴된 환자를 일차의료 만성질환관리사업(일만사)에 등록합니다.</p></div>
+            </li>
+            <li>
+              <span class="flow-num">3</span>
+              <div><h4>케어플랜 · 교육상담 · 자가실천 포인트</h4><p>케어플랜 수립, 교육상담, 자가실천 이행에 포인트를 지급합니다.</p></div>
+            </li>
+            <li>
+              <span class="flow-num">4</span>
+              <div><h4><span class="hosp-name">행복의원</span>에서 포인트 사용 → 정기 방문</h4><p>포인트를 우리 의원에서만 쓰게 해 정기적인 재방문으로 이어갑니다.</p></div>
+            </li>
+          </ol>
+          <div class="callout">
+            <p><strong>이 유형에서 강조할 것</strong> — 인당 청구액이 아니라, "정기적으로 <span class="hosp-name">행복의원</span>을 찾게 만드는 구조"라는 점을 앞세워 제안하세요. 연 6회 방문(케어플랜·교육상담 6회·점검평가 2회·진료검사)의 수가 합산액은 연동형의 논리이지, 혜택형이 내세울 숫자가 아닙니다.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>공통 반영 사항</h2>
+          <div class="common-note">
+            <span class="chip chip-common">3유형 공통</span>
+            <p><strong>케어플랜 수립 시 건강기능식품 제공</strong> — 검진만 하는 다른 기관과 차별화되는 <span class="hosp-name">행복의원</span>만의 케어입니다.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="core-band" style="margin-block:0;">
+            <p class="core-band-lede">Lock-in의 실체는 결국 하나입니다 — <strong>환자와의 끈을 놓지 않는 것.</strong></p>
+            <div class="core-points">
+              <div class="core-point"><span class="core-point-mark">P</span><h4>포인트</h4><p>자가실천·교육상담 포인트를 <span class="hosp-name">행복의원</span>에서만 쓰게 합니다.</p></div>
+              <div class="core-point"><span class="core-point-mark">E</span><h4>정기 교육자료 발송</h4><p>병원 자체 자료를 포함해 주기적으로 보내며 컨택을 이어갑니다.</p></div>
+              <div class="core-point"><span class="core-point-mark">C</span><h4>비대면관리(쌍방소통)</h4><p>진료실 밖에서 오가는 메시지로 다음 내원까지 관계를 잇습니다.</p></div>
+            </div>
+          </div>
+          <button class="print-btn no-print" data-print>이 유형 인쇄하기</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TYPE 3 ================= -->
+    <section id="view-type3" class="view" hidden>
+      <div class="container">
+        <div class="brochure-head">
+          <span class="proposal-badge">제안 대상 · <span class="hosp-name">행복의원</span> · TYPE 03</span>
+          <h1>혜택형 + 비대면관리형</h1>
+          <p class="tag3-hero">병원과 환자와의 끈을 이어줍니다</p>
+          <p class="lede" style="margin-top:18px;">혜택형의 Lock-in 효과에 웰체크 비대면관리를 더해, 진료실 밖에서도 <span class="hosp-name">행복의원</span>과 환자의 접점을 이어갑니다.</p>
+          <div class="callout callout-gold">
+            <p><strong>일만사 등록 환자에 한정되지 않습니다.</strong> 최근 교육상담 기능 업데이트로 <span class="hosp-name">행복의원</span> 자체 자료를 활용할 수 있고, 정기적으로 교육자료를 발송할 수 있어 환자와의 컨택을 꾸준히 이어갈 수 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>웰체크 비대면관리 화면</h2>
+          <p>포인트 현황, 교육자료, 담당자와의 메시지를 한 화면에서 오가며 환자와의 접점을 유지합니다.</p>
+          <div class="wellcheck-mock">
+            <span class="mock-badge">예시 화면 · 실제 웰체크 캡처로 교체하세요</span>
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <span class="ws-header">WELLCHECK · 비대면관리</span>
+                <div class="ws-card ws-point">
+                  <span>이번 달 포인트</span>
+                  <strong>320P</strong>
+                  <div class="ws-bar"><span style="width:64%"></span></div>
+                </div>
+                <div class="ws-card">
+                  <span class="ws-card-title">이번 주 교육자료</span>
+                  <ul class="ws-list">
+                    <li>✔ 저염식 실천 가이드</li>
+                    <li>○ 걷기 10분 인증</li>
+                  </ul>
+                </div>
+                <div class="ws-card ws-chat">
+                  <span class="ws-card-title">담당 간호사와 메시지</span>
+                  <p>"이번 주 혈압 기록 확인했어요, 잘하고 계세요!"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>공통 반영 사항</h2>
+          <div class="common-note">
+            <span class="chip chip-common">3유형 공통</span>
+            <p><strong>케어플랜 수립 시 건강기능식품 제공</strong> — 검진만 하는 다른 기관과 차별화되는 <span class="hosp-name">행복의원</span>만의 케어입니다.</p>
+          </div>
+          <div class="common-note">
+            <span class="chip chip-common">수가 발생 유형 공통</span>
+            <p><strong>검체검사 위수탁제도 개편</strong> — 개편된 위수탁 구조에 맞춰 <span class="hosp-name">행복의원</span>의 검체검사 수익 구조도 함께 정비해 안내합니다.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="core-band" style="margin-block:0;">
+            <p class="core-band-lede">비대면관리의 목적은 하나입니다 — <strong>환자와의 끈을 놓지 않는 것.</strong></p>
+            <div class="core-points">
+              <div class="core-point"><span class="core-point-mark">P</span><h4>포인트</h4><p>자가실천·교육상담 포인트를 <span class="hosp-name">행복의원</span>에서만 쓰게 합니다.</p></div>
+              <div class="core-point"><span class="core-point-mark">E</span><h4>정기 교육자료 발송</h4><p>병원 자체 자료를 포함해 주기적으로 보내며 컨택을 이어갑니다.</p></div>
+              <div class="core-point"><span class="core-point-mark">C</span><h4>비대면관리(쌍방소통)</h4><p>진료실 밖에서 오가는 메시지로 다음 내원까지 관계를 잇습니다.</p></div>
+            </div>
+          </div>
+          <button class="print-btn no-print" data-print>이 유형 인쇄하기</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <p class="foot-note no-print">내부 제안용 자료 · 발표 전 병원명과 수가를 반드시 확인하세요</p>
+</div>
+
+<script>
+(function(){
+  const hospInput = document.getElementById('hospInput');
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const gotoBtns = Array.from(document.querySelectorAll('[data-goto]'));
+  const printBtns = Array.from(document.querySelectorAll('[data-print]'));
+  const feeInputs = Array.from(document.querySelectorAll('.fee-input'));
+  const views = {
+    home: document.getElementById('view-home'),
+    type1: document.getElementById('view-type1'),
+    type2: document.getElementById('view-type2'),
+    type3: document.getElementById('view-type3')
+  };
+  let currentView = 'home';
+
+  function applyHospName(name){
+    const display = (name && name.trim()) ? name.trim() : '행복의원';
+    document.querySelectorAll('.hosp-name').forEach(function(el){ el.textContent = display; });
+  }
+
+  function persistHosp(v){
+    try{ localStorage.setItem('bdkit_hosp_v1', v); }catch(e){}
+  }
+  function loadPersistedHosp(){
+    try{ return localStorage.getItem('bdkit_hosp_v1'); }catch(e){ return null; }
+  }
+
+  function showView(name){
+    if(!views[name]) return;
+    currentView = name;
+    Object.keys(views).forEach(function(key){ views[key].hidden = (key !== name); });
+    tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.view === name); });
+    window.scrollTo(0,0);
+  }
+
+  function digitsOf(str){ return (str || '').replace(/[^0-9]/g,''); }
+
+  function formatFeeInput(inp){
+    const digits = digitsOf(inp.value);
+    inp.value = digits ? Number(digits).toLocaleString('ko-KR') : '';
+  }
+
+  function recomputeTotal(){
+    let total = 0;
+    feeInputs.forEach(function(inp){
+      const digits = digitsOf(inp.value);
+      total += digits ? parseInt(digits,10) : 0;
+    });
+    const totalEl = document.getElementById('feeTotal1');
+    if(totalEl) totalEl.textContent = total.toLocaleString('ko-KR') + '원';
+  }
+
+  function bindEvents(){
+    hospInput.addEventListener('input', function(){
+      applyHospName(hospInput.value);
+      persistHosp(hospInput.value);
+    });
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){ showView(t.dataset.view); });
+    });
+    gotoBtns.forEach(function(b){
+      b.addEventListener('click', function(){ showView(b.dataset.goto); });
+    });
+    printBtns.forEach(function(b){
+      b.addEventListener('click', function(){ window.print(); });
+    });
+    feeInputs.forEach(function(inp){
+      inp.addEventListener('input', function(){ formatFeeInput(inp); recomputeTotal(); });
+      inp.addEventListener('blur', function(){ formatFeeInput(inp); recomputeTotal(); });
+    });
+  }
+
+  function start(data){
+    bindEvents();
+    const initialHosp = (data && data.hospName) || loadPersistedHosp() || hospInput.value;
+    hospInput.value = initialHosp;
+    applyHospName(initialHosp);
+    if(data && Array.isArray(data.fees)){
+      feeInputs.forEach(function(inp,i){ if(data.fees[i] != null) inp.value = data.fees[i]; });
+    }
+    feeInputs.forEach(formatFeeInput);
+    recomputeTotal();
+    showView((data && data.view) || 'home');
+  }
+
+  if(window.claude && window.claude.hot && window.claude.hot.snapshot){
+    window.claude.hot.snapshot(function(){
+      return {
+        hospName: hospInput.value,
+        view: currentView,
+        fees: feeInputs.map(function(i){ return i.value; })
+      };
+    });
+  }
+  if(window.claude && window.claude.hot && window.claude.hot.ready){
+    window.claude.hot.ready(start);
+  } else {
+    start((window.claude && window.claude.hot && window.claude.hot.data) || {});
+  }
+})();
+</script>
