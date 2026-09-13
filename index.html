@@ -185,13 +185,18 @@
   .core-point p{font-size:.83rem;color:var(--ink-soft);}
 
   /* ---------- poster (actual brochure image + hospital badge) ---------- */
-  .poster-frame{position:relative;margin-top:50px;}
-  .poster-img{display:block;width:100%;border-radius:16px;box-shadow:var(--shadow);cursor:zoom-in;}
+  .poster-frame{position:relative;margin-top:20px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
+  .poster-img{display:block;width:100%;border-radius:16px;cursor:zoom-in;}
+  .poster-scrim{
+    position:absolute;top:0;left:0;right:0;height:13%;z-index:4;
+    background:linear-gradient(to bottom, rgba(8,12,18,.6), rgba(8,12,18,0));
+    pointer-events:none;
+  }
   .poster-badge{
-    position:absolute;top:-42px;left:0;z-index:5;background:var(--t-accent);color:#fff;
+    position:absolute;top:16px;left:20px;z-index:5;background:var(--t-accent);color:#fff;
     font-weight:700;font-size:.85rem;padding:7px 18px;border-radius:999px;
-    box-shadow:0 6px 14px -4px rgba(0,0,0,.4);font-family:var(--font-mono);letter-spacing:.01em;
-    max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    box-shadow:0 3px 10px -2px rgba(0,0,0,.5);font-family:var(--font-mono);letter-spacing:.01em;
+    max-width:calc(100% - 40px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   }
   .poster-zoom{
     position:absolute;bottom:16px;right:16px;z-index:6;
@@ -257,9 +262,8 @@
     main{padding-block:0;}
     .view{margin:0;break-after:page;}
     .container{max-width:none;}
-    .poster-frame{margin-top:38px;}
-    .poster-badge{top:-38px;box-shadow:none;}
-    .poster-img{width:100%;height:calc(100vh - 38px);object-fit:contain;border-radius:0;box-shadow:none;display:block;}
+    .poster-frame{margin-top:0;border-radius:0;box-shadow:none;}
+    .poster-img{width:100%;height:100vh;object-fit:contain;border-radius:0;display:block;}
   }
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
@@ -369,6 +373,7 @@
     <section id="view-type1" class="view" hidden>
       <div class="container" style="--t-accent:#2f5fd6;">
         <div class="poster-frame">
+          <div class="poster-scrim" aria-hidden="true"></div>
           <span class="poster-badge"><span class="hosp-name">대웅의원</span> X 일만사 연동형</span>
           <img class="poster-img" src="assets/posters/type1-linked.png" alt="검진 결과 연동형 브로셔">
           <button class="poster-zoom no-print" type="button" data-zoom-open>🔍 크게 보기</button>
@@ -382,6 +387,7 @@
     <section id="view-type2" class="view" hidden>
       <div class="container" style="--t-accent:#d9622f;">
         <div class="poster-frame">
+          <div class="poster-scrim" aria-hidden="true"></div>
           <span class="poster-badge"><span class="hosp-name">대웅의원</span> X 일만사 혜택형</span>
           <img class="poster-img" src="assets/posters/type2-benefit.png" alt="혜택형 브로셔">
           <button class="poster-zoom no-print" type="button" data-zoom-open>🔍 크게 보기</button>
@@ -395,6 +401,7 @@
     <section id="view-type3" class="view" hidden>
       <div class="container" style="--t-accent:#3fae95;">
         <div class="poster-frame">
+          <div class="poster-scrim" aria-hidden="true"></div>
           <span class="poster-badge"><span class="hosp-name">대웅의원</span> X 일만사 혜택+비대면형</span>
           <img class="poster-img" src="assets/posters/type3-benefit-remote.png" alt="혜택+비대면관리형 브로셔">
           <button class="poster-zoom no-print" type="button" data-zoom-open>🔍 크게 보기</button>
