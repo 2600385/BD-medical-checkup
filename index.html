@@ -28,6 +28,7 @@
 
   *{box-sizing:border-box;}
   body{
+    margin:0;
     background:var(--paper);
     color:var(--ink);
     font-family:var(--font-body);
@@ -207,10 +208,12 @@
 
   @media print{
     @page{size:A4 portrait;margin:0;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
     .topbar,.tabs,.no-print,.checkpoint{display:none !important;}
     .view[hidden]{display:none !important;}
     body{padding-inline:0;background:#fff;}
-    .view{break-after:page;}
+    main{padding-block:0;}
+    .view{margin:0;break-after:page;}
     .container{max-width:none;}
     .poster-frame{margin-top:0;}
     .poster-badge{top:10px;box-shadow:none;}
