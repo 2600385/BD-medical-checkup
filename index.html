@@ -62,20 +62,17 @@
     box-shadow:0 12px 28px -20px rgba(20,32,35,.45);
   }
   .topbar-inner{
-    position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
-    align-items:start;column-gap:16px;max-width:1040px;margin-inline:auto;width:100%;padding-inline:16px;
+    position:relative;max-width:1040px;margin-inline:auto;width:100%;padding:0 16px 18px;
   }
-  .topbar-spacer{grid-column:1;}
-  .brand-block{grid-column:2;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;}
+  .brand-block{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;}
   .brand-preline{font-size:.85rem;font-weight:600;color:var(--ink-soft);}
   .brand{display:flex;align-items:center;justify-content:center;}
   .brand-title{display:inline-flex;align-items:center;gap:10px;}
   .brand-name{font-family:var(--font-display);font-weight:900;font-size:clamp(1.3rem,4.4vw,1.85rem);letter-spacing:-.02em;text-wrap:balance;}
+  .brand-line{width:min(520px,80%);height:2px;background:#20242b;opacity:.8;margin:12px auto 4px;border:none;}
   .brand-subline{font-size:.83rem;color:var(--ink-faint);max-width:52ch;}
   .brand-subline strong{color:var(--accent);font-weight:700;}
-  .thread-deco{grid-column:1/-1;justify-self:center;display:block;width:min(640px,92%);height:46px;margin-top:8px;overflow:visible;}
-  .thread-deco path{fill:none;stroke:#20242b;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:.6;}
-  .topbar-controls{grid-column:3;justify-self:end;align-self:start;}
+  .topbar-controls{position:absolute;right:16px;bottom:0;}
   .hosp-field{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
   .hosp-field label{font-size:.7rem;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;}
   .hosp-field input{
@@ -91,11 +88,8 @@
   }
   .hosp-hint{font-size:.72rem;color:var(--ink-faint);}
   @media (max-width:680px){
-    .topbar-inner{display:flex;flex-direction:column;align-items:center;}
-    .topbar-spacer{display:none;}
-    .brand-block{order:1;}
-    .topbar-controls{order:2;grid-column:auto;justify-self:auto;margin-top:14px;}
-    .thread-deco{order:3;}
+    .topbar-inner{padding-bottom:0;}
+    .topbar-controls{position:static;margin-top:14px;display:flex;justify-content:center;}
     .hosp-field{align-items:center;}
     .hosp-field input{width:min(240px,70vw);}
   }
@@ -262,7 +256,6 @@
   <div class="sticky-head">
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="topbar-spacer" aria-hidden="true"></div>
       <div class="brand-block">
         <p class="brand-preline">검진은 끝이 아니라 시작입니다.</p>
         <div class="brand">
@@ -270,6 +263,7 @@
             <span class="brand-name">검진센터 웰체크&amp;일만사 제안</span>
           </span>
         </div>
+        <hr class="brand-line" aria-hidden="true">
         <p class="brand-subline">검진기관에서 웰체크·일만사가 통하는 이유는 하나입니다.<br>환자와의 끈을 놓지 않는 것. 그 끈이 다음 내원으로 이어줍니다.</p>
       </div>
       <div class="topbar-controls">
@@ -279,9 +273,6 @@
           <span class="hosp-hint">예시입니다 · 실제 병원명으로 바꿔 넣으세요</span>
         </div>
       </div>
-      <svg class="thread-deco" viewBox="0 -14 700 80" aria-hidden="true">
-        <path d="M0,36 C90,36 160,44 220,32 C260,24 285,26 300,36 C320,8 270,-10 250,18 C232,38 265,48 300,50 L350,60 L400,50 C435,48 468,38 450,18 C430,-10 380,8 400,36 C415,26 440,24 480,32 C540,44 610,36 700,36"/>
-      </svg>
     </div>
   </header>
 
