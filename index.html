@@ -176,7 +176,7 @@
     pointer-events:none;
   }
   .poster-badge{
-    position:absolute;top:16px;left:20px;z-index:5;background:var(--t-accent);color:#fff;
+    position:absolute;top:var(--badge-top,8px);left:20px;z-index:5;background:var(--t-accent);color:#fff;
     font-weight:700;font-size:.85rem;padding:7px 18px;border-radius:999px;
     box-shadow:0 3px 10px -2px rgba(0,0,0,.5);font-family:var(--font-mono);letter-spacing:.01em;
     max-width:calc(100% - 40px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -360,7 +360,7 @@
 
     <!-- ================= TYPE 1 : 검진 결과 연동형 ================= -->
     <section id="view-type1" class="view" hidden>
-      <div class="container" style="--t-accent:#2f5fd6;">
+      <div class="container" style="--t-accent:#2f5fd6;--badge-top:16px;">
         <div class="poster-frame">
           <div class="poster-scrim" aria-hidden="true"></div>
           <span class="poster-badge"><span class="hosp-name">대웅의원</span> X 일만사 연동형</span>
