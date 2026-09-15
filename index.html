@@ -172,17 +172,6 @@
   .type-card .goto{font-size:.82rem;font-weight:700;color:var(--tc-color,var(--accent));}
 
   .core-band{background:var(--surface-2);border-radius:18px;padding:26px 24px;margin-block:8px 20px;}
-  .core-band-lede{font-size:1rem;max-width:64ch;}
-  .core-band-lede strong{color:var(--accent);}
-  .core-points{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px;}
-  @media (max-width:720px){.core-points{grid-template-columns:1fr;}}
-  .core-point{display:flex;flex-direction:column;gap:6px;}
-  .core-point-mark{
-    display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;
-    background:var(--accent);color:var(--accent-ink);font-family:var(--font-mono);font-weight:600;font-size:.8rem;
-  }
-  .core-point h4{font-size:.94rem;font-weight:600;}
-  .core-point p{font-size:.83rem;color:var(--ink-soft);}
 
   /* ---------- poster (actual brochure image + hospital badge) ---------- */
   .poster-frame{position:relative;margin-top:20px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
@@ -228,8 +217,8 @@
 
   /* ---------- checkpoint (shared across posters) ---------- */
   .checkpoint{padding-block:32px 8px;}
-  .checkpoint > .cp-head h2{font-size:1.25rem;font-weight:700;}
-  .checkpoint > .cp-head p{color:var(--ink-soft);max-width:64ch;margin-top:8px;font-size:.95rem;}
+  .cp-head h2{font-size:1.25rem;font-weight:700;}
+  .cp-head p{color:var(--ink-soft);max-width:64ch;margin-top:8px;font-size:.95rem;}
   .compare-table-wrap{overflow-x:auto;margin-top:20px;}
   .compare-table{width:100%;min-width:480px;border-collapse:collapse;font-size:.88rem;}
   .compare-table th,.compare-table td{border:1px solid var(--line);padding:10px 12px;text-align:left;}
@@ -359,11 +348,20 @@
         </div>
 
         <div class="core-band">
-          <p class="core-band-lede">그 끈을 만드는 <strong>3가지</strong></p>
-          <div class="core-points">
-            <div class="core-point"><span class="core-point-mark">1</span><h4>포인트</h4><p>자가실천·교육상담 포인트를 <span class="hosp-name">대웅의원</span>에서만 쓰게 합니다.</p></div>
-            <div class="core-point"><span class="core-point-mark">2</span><h4>정기 교육자료 발송</h4><p>병원 자체 자료를 포함해 주기적으로 보내며 컨택을 이어갑니다.</p></div>
-            <div class="core-point"><span class="core-point-mark">3</span><h4>비대면관리(쌍방소통)</h4><p>진료실 밖에서 오가는 메시지로 다음 내원까지 관계를 잇습니다.</p></div>
+          <div class="cp-head">
+            <h2>체크 포인트 — 웰체크·일만사, 지금 시작해야 하는 이유</h2>
+            <p>국가검진은 결과 통보로 끝나지만, 일만사는 그 이후를 병원의 진료·수익·관계로 이어갑니다.</p>
+          </div>
+          <div class="compare-table-wrap">
+            <table class="compare-table">
+              <thead><tr><th>구분</th><th>국가검진 검사</th><th>일만사 검사(웰체크 연계)</th></tr></thead>
+              <tbody>
+                <tr><td>사후관리</td><td>결과 통보로 종료</td><td>케어플랜 · 교육상담 · 비대면관리로 지속</td></tr>
+                <tr><td>병원 수가</td><td>검진 당일 1회성 산정</td><td>교육상담료 · 환자관리료 등 반복 수가 발생</td></tr>
+                <tr><td>환자 접점</td><td>검진 후 단절</td><td>포인트 · 정기 교육자료 · 비대면관리로 지속 연결</td></tr>
+                <tr><td>재방문</td><td>보장되지 않음</td><td>포인트 사용 · 정기검진 유도로 Lock-in</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -422,21 +420,6 @@
 </div>
 
 <template id="checkpointTpl">
-  <div class="cp-head">
-    <h2>체크 포인트 — 웰체크·일만사, 지금 시작해야 하는 이유</h2>
-    <p>국가검진은 결과 통보로 끝나지만, 일만사는 그 이후를 병원의 진료·수익·관계로 이어갑니다.</p>
-  </div>
-  <div class="compare-table-wrap">
-    <table class="compare-table">
-      <thead><tr><th>구분</th><th>국가검진 검사</th><th>일만사 검사(웰체크 연계)</th></tr></thead>
-      <tbody>
-        <tr><td>사후관리</td><td>결과 통보로 종료</td><td>케어플랜 · 교육상담 · 비대면관리로 지속</td></tr>
-        <tr><td>병원 수가</td><td>검진 당일 1회성 산정</td><td>교육상담료 · 환자관리료 등 반복 수가 발생</td></tr>
-        <tr><td>환자 접점</td><td>검진 후 단절</td><td>포인트 · 정기 교육자료 · 비대면관리로 지속 연결</td></tr>
-        <tr><td>재방문</td><td>보장되지 않음</td><td>포인트 사용 · 정기검진 유도로 Lock-in</td></tr>
-      </tbody>
-    </table>
-  </div>
   <div class="reason-list">
     <div class="reason">
       <span class="reason-tag threat">위협</span>
@@ -453,38 +436,6 @@
     <div class="reason">
       <span class="reason-tag diff">차별화</span>
       <div><h4>포인트 · 건기식 · 비대면관리</h4><p>최대 80,000P 지급, 맞춤 건기식 제공, 비대면관리로 타 검진기관과 다른 환자 경험을 제공해 재방문과 소개를 유도합니다.</p></div>
-    </div>
-  </div>
-</template>
-
-<template id="checkpointTplBenefit">
-  <div class="cp-head">
-    <h2>체크 포인트 — 웰체크·일만사, 지금 시작해야 하는 이유</h2>
-    <p>국가검진은 결과 통보로 끝나지만, 일만사는 그 이후를 병원의 진료·수익·관계로 이어갑니다.</p>
-  </div>
-  <div class="compare-table-wrap">
-    <table class="compare-table">
-      <thead><tr><th>구분</th><th>국가검진 검사</th><th>일만사 검사(웰체크 연계)</th></tr></thead>
-      <tbody>
-        <tr><td>사후관리</td><td>결과 통보로 종료</td><td>케어플랜 · 교육상담 · 비대면관리로 지속</td></tr>
-        <tr><td>병원 수가</td><td>검진 당일 1회성 산정</td><td>교육상담료 · 환자관리료 등 반복 수가 발생</td></tr>
-        <tr><td>환자 접점</td><td>검진 후 단절</td><td>포인트 · 정기 교육자료 · 비대면관리로 지속 연결</td></tr>
-        <tr><td>재방문</td><td>보장되지 않음</td><td>포인트 사용 · 정기검진 유도로 Lock-in</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="reason-list">
-    <div class="reason">
-      <span class="reason-tag lockin">Lock-in</span>
-      <div><h4>검진기관 상관없이 우리 병원으로</h4><p>다른 검진기관에서 검진받은 환자도 일만사에 등록되는 순간 <span class="hosp-name">대웅의원</span>에 Lock-in됩니다.</p></div>
-    </div>
-    <div class="reason">
-      <span class="reason-tag opp">혜택</span>
-      <div><h4>포인트가 만드는 자연스러운 재방문</h4><p>자가실천·교육상담 포인트를 <span class="hosp-name">대웅의원</span>에서만 쓰게 해, 억지로 부르지 않아도 다시 찾아오게 만듭니다.</p></div>
-    </div>
-    <div class="reason">
-      <span class="reason-tag diff">차별화</span>
-      <div><h4>건기식으로 만드는 우리 병원만의 케어</h4><p>케어플랜 수립 시 맞춤 건강기능식품을 함께 제공해, 검진만 하는 타 기관과 다른 경험을 줍니다.</p></div>
     </div>
   </div>
 </template>
@@ -514,14 +465,9 @@
   let currentView = 'home';
 
   function fillCheckpoints(){
-    const tplMap = {
-      type1: document.getElementById('checkpointTpl'),
-      type2: document.getElementById('checkpointTplBenefit'),
-      type3: document.getElementById('checkpointTpl')
-    };
-    Object.keys(tplMap).forEach(function(key){
+    const tpl = document.getElementById('checkpointTpl');
+    ['type1','type2','type3'].forEach(function(key){
       const host = document.getElementById('checkpoint-' + key);
-      const tpl = tplMap[key];
       if(host && tpl && !host.dataset.filled){
         host.appendChild(tpl.content.cloneNode(true));
         host.dataset.filled = '1';
