@@ -64,7 +64,13 @@
   .topbar-inner{
     position:relative;max-width:1040px;margin-inline:auto;width:100%;padding:0 16px 18px;
   }
-  .brand-block{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;}
+  button.brand-block{
+    display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+    background:none;border:none;padding:0;width:100%;font:inherit;color:inherit;cursor:pointer;
+    border-radius:12px;
+  }
+  button.brand-block:hover .brand-name{opacity:.82;}
+  button.brand-block:focus-visible{outline:2px solid var(--accent);outline-offset:6px;}
   .brand-preline{font-size:.85rem;font-weight:600;color:var(--ink-soft);}
   .brand{display:flex;align-items:center;justify-content:center;}
   .brand-title{display:inline-flex;align-items:center;gap:10px;}
@@ -256,7 +262,7 @@
   <div class="sticky-head">
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand-block">
+      <button class="brand-block" type="button" data-goto="home" aria-label="홈으로 이동">
         <p class="brand-preline">검진은 끝이 아니라 시작입니다.</p>
         <div class="brand">
           <span class="brand-title">
@@ -265,7 +271,7 @@
         </div>
         <hr class="brand-line" aria-hidden="true">
         <p class="brand-subline">검진기관에서 웰체크·일만사가 통하는 이유는 하나입니다.<br>환자와의 끈을 놓지 않는 것. 그 끈이 다음 내원으로 이어줍니다.</p>
-      </div>
+      </button>
       <div class="topbar-controls">
         <div class="hosp-field">
           <label for="hospInput">제안 대상 병원명</label>
